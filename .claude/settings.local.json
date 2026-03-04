@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm ls @portabletext/react)",
+      "Bash(taskkill /F /PID 11884)"
+    ]
+  }
+}

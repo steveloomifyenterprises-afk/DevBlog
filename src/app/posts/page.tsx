@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { client } from '@/lib/sanity/client';
 import type { Post } from '@/types/sanity';
 
-async function getPosts() {
+async function getAllPosts() {
   try {
     return await client.fetch(`*[_type == "post" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
       _id,
@@ -38,47 +38,33 @@ function formatDate(dateString: string): string {
   });
 }
 
-export default async function Home() {
-  const posts = await getPosts();
+export default async function PostsPage() {
+  const posts = await getAllPosts();
 
   return (
     <div className="w-full">
-      {/* Hero Section */}
-      <section className="min-h-[60vh] flex items-center justify-center px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-[hsl(var(--foreground))] leading-tight mb-6">
-            Writing about web development, architecture, and code.
+      {/* Header */}
+      <section className="pt-16 pb-12 px-6">
+        <div className="mx-auto max-w-3xl">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 link-muted text-sm mb-8"
+          >
+            <ArrowLeft className="w-3 h-3" strokeWidth={2} />
+            Back to home
+          </Link>
+          <h1 className="font-serif text-4xl md:text-5xl text-[hsl(var(--foreground))] mb-4">
+            All Posts
           </h1>
-          <p className="text-lg md:text-xl text-[hsl(var(--muted-foreground))] leading-relaxed mb-8 max-w-2xl mx-auto">
-            Exploring modern frontend development through thoughtful essays and practical guides.
+          <p className="text-lg text-[hsl(var(--muted-foreground))] max-w-2xl">
+            Thoughts, tutorials, and insights on modern web development.
           </p>
-          <div className="flex items-center justify-center gap-8">
-            <Link href="/posts" className="link-minimal">
-              View all posts
-            </Link>
-            <Link href="/about" className="link-muted">
-              About
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Blog Post Feed */}
-      <section className="py-16 border-t border-[hsl(var(--border))]">
-        <div className="mx-auto max-w-3xl px-6 sm:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="font-serif text-2xl text-[hsl(var(--foreground))]">
-              Recent Posts
-            </h2>
-            <Link
-              href="/posts"
-              className="link-muted text-sm flex items-center gap-1"
-            >
-              View all
-              <ArrowRight className="w-3 h-3" strokeWidth={2} />
-            </Link>
-          </div>
-
+      {/* Posts Feed */}
+      <section className="border-t border-[hsl(var(--border))]">
+        <div className="mx-auto max-w-3xl px-6 sm:px-8 py-12">
           {posts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-[hsl(var(--muted-foreground))]">
@@ -113,9 +99,9 @@ export default async function Home() {
                       href={`/posts/${post.slug?.current}`}
                       className="block group/link"
                     >
-                      <h3 className="font-serif text-xl md:text-2xl text-[hsl(var(--foreground))] mb-2 group-hover/link:opacity-70 transition-opacity duration-200">
+                      <h2 className="font-serif text-xl md:text-2xl text-[hsl(var(--foreground))] mb-2 group-hover/link:opacity-70 transition-opacity duration-200">
                         {post.title}
-                      </h3>
+                      </h2>
                       {post.excerpt && (
                         <p className="text-[hsl(var(--muted-foreground))] line-clamp-2 leading-relaxed">
                           {post.excerpt}
