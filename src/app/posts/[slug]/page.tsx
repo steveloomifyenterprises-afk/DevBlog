@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowLeft, Clock } from 'lucide-react';
 import { client } from '@/lib/sanity/client';
-import type { Post } from '@/types/sanity';
+import type { Post, Category } from '@/types/sanity';
 import { PortableText } from '@portabletext/react';
 import { components } from '@/components/blog/PortableText';
 import { notFound } from 'next/navigation';
@@ -86,7 +86,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             {/* Categories */}
             {post.categories && post.categories.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
-                {post.categories.map((category) => (
+                {post.categories.map((category: Category) => (
                   <Link
                     key={category._id}
                     href={`/categories/${category.slug?.current}`}
