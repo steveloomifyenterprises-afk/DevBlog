@@ -2,20 +2,19 @@
 
 import { useRef, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Simple Floating Mesh Component
 function FloatingMesh({ position = [0, 0, 0], color = '#4f46e5', scale = 1 }: any) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
-  
+
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.x = state.clock.elapsedTime * 0.2;
       meshRef.current.rotation.y = state.clock.elapsedTime * 0.3;
       meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime) * 0.1;
-      
+
       // Scale animation on hover
       const targetScale = hovered ? scale * 1.2 : scale;
       meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
@@ -23,22 +22,20 @@ function FloatingMesh({ position = [0, 0, 0], color = '#4f46e5', scale = 1 }: an
   });
 
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-      <mesh
-        ref={meshRef}
-        position={position}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        scale={scale}
-      >
-        <dodecahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial
-          color={color}
-          roughness={0.2}
-          metalness={0.8}
-        />
-      </mesh>
-    </Float>
+    <mesh
+      ref={meshRef}
+      position={position}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      scale={scale}
+    >
+      <dodecahedronGeometry args={[1, 0]} />
+      <meshStandardMaterial
+        color={color}
+        roughness={0.2}
+        metalness={0.8}
+      />
+    </mesh>
   );
 }
 
