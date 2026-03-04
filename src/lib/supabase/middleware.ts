@@ -22,7 +22,7 @@ export async function updateSession(request: NextRequest) {
         },
         remove(name: string, options: any) {
           request.cookies.delete(name);
-          response.cookies.delete(name, options);
+          response.cookies.delete(name);
         },
       },
     }

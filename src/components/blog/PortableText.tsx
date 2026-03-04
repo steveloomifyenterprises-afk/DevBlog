@@ -11,9 +11,9 @@ export const components: PortableTextComponents = {
     strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
     code: ({ children }) => <code className="bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>,
-    link: ({ children, href }) => (
+    link: ({ children, value }: any) => (
       <a
-        href={href as string}
+        href={value?.href || '#'}
         className="text-[hsl(var(--foreground))] underline decoration-[hsl(var(--border))] underline-offset-4 hover:decoration-[hsl(var(--foreground))] transition-colors"
         rel="noopener noreferrer"
       >

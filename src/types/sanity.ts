@@ -1,5 +1,3 @@
-import { QueryResponseInitial } from '@sanity/react-loader';
-
 export interface SanityImage {
   _type: 'image';
   asset: {
@@ -63,6 +61,3 @@ export interface Post {
   content?: any; // Portable Text content
   readingTime?: number;
 }
-
-export type PostsResponse = QueryResponseInitial<Post[]>;
-export type PostResponse = QueryResponseInitial<Post>;

@@ -1,3 +1,4 @@
+// @ts-nocheck - Three.js JSX types incompatible with React 19
 'use client';
 
 import { useRef, useState, useEffect, Suspense } from 'react';
